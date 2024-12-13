@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我的视频</title>
+    <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/bootstrap/5.1.0/css/bootstrap.min.css">
+    <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+
+        .video-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .video-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .video-thumbnail {
+            height: 180px;
+            object-fit: cover;
+            border-radius: 5px 5px 0 0;
+        }
+
+        .play-btn {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 0, 0, 0.6);
+            color: #fff;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            font-size: 24px;
+            line-height: 50px;
+            text-align: center;
+            cursor: pointer;
+        }
+
+        .play-btn:hover {
+            background: rgba(0, 0, 0, 0.8);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container my-5">
+        <h1 class="text-center mb-4">我的视频</h1>
+        <div class="row" id="video-list">
+        </div>
+    </div>
+
+    <script>
+        var BASEURL = 'http://154.8.141.131:7084';
+
+        function getFileList() {
+            $.post(BASEURL + "/viplist", function (response) {
+                const videos = response.data;
+                const $videoList = $("#video-list");
+                $videoList.empty();
+                videos.forEach(video => {
+                    const videoCard = `
+                        <div class="col-md-4 mb-4">
+                            <div class="card video-card">
+                                <div class="position-relative">
+                                    <img src="http://154.8.141.131:8085/static/vip.png" class="video-thumbnail w-100">
+                                    <button class="play-btn" onclick="playVideo('${video}')">▶</button>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    $videoList.append(videoCard);
+                });
+            }).fail(function (error) {
+                console.error("获取视频列表失败", error);
+            });
+        }
+
+        function playVideo(videoUrl) {
+            const encodedUrl = encodeURIComponent(videoUrl);
+            window.location.href = `item.html?video=${encodedUrl}`;
+        }
+
+        $(document).ready(function () {
+            getFileList();
+        });
+    </script>
+
+    <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script> -->
+</body>
+
+</html>

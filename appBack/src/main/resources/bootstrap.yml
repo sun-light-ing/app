@@ -1,0 +1,27 @@
+spring:
+  main:
+    allow-circular-references: true
+  application:
+    name: my-app
+  cloud:
+    nacos:
+      config:
+        enabled: true
+        prefix: app
+        file-extension: yaml
+        server-addr: 154.8.141.131:8848
+      discovery:
+        enabled: true
+        register-enabled: true
+        server-addr: 154.8.141.131:8848
+  datasource:
+    url: jdbc:mysql://154.8.141.131:3306/appointment_system?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai
+    username: root
+    password: Sjw.720329
+    driver-class-name: com.mysql.cj.jdbc.Driver
+server:
+  port: 6666
+
+jwt:
+  secret: song
+  expiration: 86400000

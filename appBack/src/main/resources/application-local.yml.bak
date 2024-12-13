@@ -1,0 +1,40 @@
+server:
+  port: 9010
+  tomcat:
+    max-swallow-size: -1  # tomcat默认大小2M，超过2M的文件不会被捕获，需要调整此处大小为10MB或者-1即可
+management:
+  endpoints:
+    web:
+      exposure:
+        include=refresh: refresh
+
+spring:
+  application:
+    name: my-app
+  datasource:
+    dynamic:
+      primary: master # 默认主数据库
+      strict: false # 严格匹配数据源,默认false. true未匹配到指定数据源时抛异常, false使用默认数据源
+      datasource:
+        master:
+          url: jdbc:mysql://154.8.141.131:3306/appointment_system?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai
+          username: root
+          password: Sjw.720329
+          driver-class-name: com.mysql.cj.jdbc.Driver
+        kingbase:
+          url: jdbc:kingbase://154.8.141.131:5432/appointment_system?currentSchema=public
+          username: root
+          password: Sjw.720329
+          driver-class-name: com.kingbase.Driver
+  servlet:
+    multipart:
+      max-file-size: 2MB     # 文件上传大小限制为XMB
+      max-request-size: 2MB  # 请求大小限制为XMB
+  redis:
+    host: 154.8.141.131
+    port: 6379
+    database: 0
+
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl

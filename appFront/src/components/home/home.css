@@ -1,0 +1,19 @@
+a {
+    text-decoration: none;
+    margin-left: 30%;
+    color: rgb(0, 255, 42);
+}
+
+h1 {
+    color: rgb(235, 227, 227);
+    margin-bottom: 3%;
+}
+
+.container {
+    height: 100vh;
+    /* background-color: rgb(146, 145, 145); */
+    background-image: url('https://img2.baidu.com/it/u=557497473,2885821581&fm=253&fmt=auto?w=1280&h=800');
+    background-size: cover;
+    background-position: center;
+    opacity: .9;
+}
