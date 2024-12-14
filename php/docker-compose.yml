@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: thinkphp_app
+    volumes:
+      - ./tp:/var/www/html  # 挂载本地 tp 目录
+    networks:
+      - app-network
+
+  nginx:
+    image: nginx:latest
+    container_name: nginx_server
+    ports:
+      - "8021:80"  # 将本地 8080 端口映射到容器内的 80 端口
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf  # 挂载自定义的 NGINX 配置文件
+      - ./tp:/var/www/html  # 挂载 tp 目录
+    depends_on:
+      - app
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
+
